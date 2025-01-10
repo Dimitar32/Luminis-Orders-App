@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getOrders, deleteOrder } from "../api";
-import styles from "../styles/Orders.module.css";
+import styles from "./OrdersPages.module.css";
 
 const OrdersPage = () => {
     const [orders, setOrders] = useState([]);
