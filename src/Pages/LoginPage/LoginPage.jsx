@@ -1,32 +1,41 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { loginUser } from "../api";
-import styles from "./LoginPage.module.css";
+import axios from "axios";
+import { useNavigate } from "react-router-dom"; // For redirection
+import styles from "../LoginPage/LoginPage.module.css";
 
-const LoginPage = () => {
-    const [username, setUsername] = useState("");
+const LoginPage = ({ setToken }) => {
     const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
-    const navigate = useNavigate();
+    const [username, setUsername] = useState("");
+    const navigate = useNavigate(); // Hook for navigation
 
     const handleLogin = async (e) => {
         e.preventDefault();
+
         try {
-            const res = await loginUser({ username, password });
-            localStorage.setItem("token", res.data.token);
-            navigate("/orders");
-        } catch (err) {
-            setError("Invalid credentials");
+            const res = await axios.post("http://localhost:5000/api/login", {
+                username,
+                password
+            });
+
+            if (res.data.success) {
+                localStorage.setItem("token", res.data.token); // Store token
+                setToken(res.data.token);
+                navigate("/orders"); // Redirect to OrdersPage
+            } else {
+                alert("Invalid credentials");
+            }
+        } catch (error) {
+            console.error("Login error:", error);
+            alert("Login failed");
         }
     };
 
     return (
         <div className={styles.container}>
             <h2>Login</h2>
-            {error && <p className={styles.error}>{error}</p>}
             <form onSubmit={handleLogin}>
-                <input type="text" placeholder="Username" value={username} onChange={e => setUsername(e.target.value)} required />
-                <input type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} required />
+                <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
+                <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
                 <button type="submit">Login</button>
             </form>
         </div>

@@ -1,19 +1,31 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api";
-
-export const loginUser = async (credentials) => {
-    return axios.post(`${API_URL}/login`, credentials);
-};
+const API_URL = "http://localhost:5000/api/orders"; // Change if necessary
 
 export const getOrders = async (token) => {
-    return axios.get(`${API_URL}/orders`, {
-        headers: { Authorization: `Bearer ${token}` },
-    });
+    try {
+        const res = await axios.get(API_URL, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        return res.data;
+    } catch (err) {
+        console.error("Error fetching orders:", err);
+        return { success: false, orders: [] };
+    }
 };
 
 export const deleteOrder = async (id, token) => {
-    return axios.delete(`${API_URL}/orders/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-    });
+    try {
+        await axios.delete(`${API_URL}/${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        return { success: true };
+    } catch (err) {
+        console.error("Error deleting order:", err);
+        return { success: false };
+    }
 };
