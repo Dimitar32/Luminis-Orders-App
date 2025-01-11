@@ -174,15 +174,14 @@ const OrdersPage = () => {
                                     <ul>
                                         {JSON.parse(order.order_items || "[]").map((item, idx) => (
                                             <li key={idx}>
-                                                {item.продукт} - {item.количество} бр. - {item.цена.toFixed(2)} лв.
+                                                {item.продукт} - {item.количество} бр. - {item.цена} лв.
                                             </li>
                                         ))}
                                     </ul>
 
                                     <strong>Total Price:</strong> 
                                     {JSON.parse(order.order_items || "[]")
-                                        .reduce((sum, item) => sum + item.цена, 0)
-                                        .toFixed(2)} лв.
+                                        .reduce((sum, item) => sum + item.цена, 0)} лв.
 
                                     {/* 🔹 Status Dropdown */}
                                     <select 
