@@ -7,11 +7,16 @@ function App() {
     const [token, setToken] = useState(localStorage.getItem("token"));
 
     return (
-            <Routes>
-                {/* Pass setToken as a prop */}
-                <Route path="/login" element={<LoginPage setToken={setToken} />} />
-                <Route path="/orders" element={token ? <OrdersPage /> : <Navigate to="/login" />} />
-            </Routes>
+        <Routes>
+            {/* Redirect root path ("/") to Login */}
+            <Route path="/" element={<Navigate to="/login" />} />
+            
+            {/* Pass setToken as a prop to LoginPage */}
+            <Route path="/login" element={<LoginPage setToken={setToken} />} />
+            
+            {/* Protect OrdersPage */}
+            <Route path="/orders" element={token ? <OrdersPage /> : <Navigate to="/login" />} />
+        </Routes>
     );
 }
 
