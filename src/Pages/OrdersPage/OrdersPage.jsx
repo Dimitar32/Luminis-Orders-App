@@ -128,11 +128,11 @@ const OrdersPage = () => {
 
     return (
         <div className={styles.container}>
-            <h2>Orders</h2>
+            <h2>Поръчки</h2>
 
             {/* 🔹 Status Filter Dropdown */}
             <div className={styles.filterContainer}>
-                <label htmlFor="statusFilter">Filter by Status:</label>
+                <label htmlFor="statusFilter">Филтирай по статус:</label>
                 <select 
                     id="statusFilter" 
                     value={filterStatus} 
@@ -163,14 +163,15 @@ const OrdersPage = () => {
                             {/* 🔹 Order Details (Expand when clicked) */}
                             {openOrder === order.id && (
                                 <div className={styles.orderDetails}>
-                                    <h3>Order Details</h3>
-                                    <p><strong>Phone:</strong> {order.phone}</p>
-                                    <p><strong>Address:</strong> {order.address}</p>
-                                    <p><strong>City:</strong> {order.city}</p>
-                                    <p><strong>Note:</strong> {order.note || "No notes"}</p>
-                                    <p><strong>Status:</strong> {order.status}</p>
+                                    <h3>Детайли на поръчката</h3>
+                                    <p><strong>Получател:</strong> {order.first_name} {order.last_name}</p>
+                                    <p><strong>Телефон:</strong> {order.phone}</p>
+                                    <p><strong>Офис на Еконт:</strong> {order.address}</p>
+                                    <p><strong>Град:</strong> {order.city}</p>
+                                    <p><strong>Бележка:</strong> {order.note || "No notes"}</p>
+                                    <p><strong>Статус:</strong> {order.status}</p>
 
-                                    <h4>Items:</h4>
+                                    <h4>Продукти:</h4>
                                     <ul>
                                         {JSON.parse(order.order_items || "[]").map((item, idx) => (
                                             <li key={idx}>
@@ -179,36 +180,48 @@ const OrdersPage = () => {
                                         ))}
                                     </ul>
 
-                                    <strong>Total Price:</strong> 
+                                    <strong>Крайна Цена:</strong> 
                                     {JSON.parse(order.order_items || "[]")
                                         .reduce((sum, item) => sum + item.цена, 0)} лв.
 
-                                    {/* 🔹 Status Dropdown */}
-                                    <select 
-                                        value={order.status || "pending"} 
-                                        onChange={(e) => handleUpdateStatus(order.id, e.target.value)}
-                                        className={styles.statusDropdown}
-                                    >
-                                        <option value="pending">Pending</option>
-                                        <option value="shipped">Shipped</option>
-                                        <option value="delivered">Delivered</option>
-                                        <option value="cancelled">Cancelled</option>
-                                    </select>
+                                    <div className={styles.statusContainer}>
+                                        {/* Status Dropdown */}
+                                        <select 
+                                            value={order.status || "pending"} 
+                                            onChange={(e) => handleUpdateStatus(order.id, e.target.value)}
+                                            className={styles.statusDropdown}
+                                        >
+                                            <option value="pending">Pending</option>
+                                            <option value="shipped">Shipped</option>
+                                            <option value="delivered">Delivered</option>
+                                            <option value="cancelled">Cancelled</option>
+                                        </select>
 
-                                    {/* 🗑️ Delete Button */}
-                                    <button 
-                                        className={styles.deleteButton} 
-                                        onClick={() => handleDeleteOrder(order.id)}
-                                    >
-                                        Delete
-                                    </button>
+                                        {/* Create Shipping Label Button - Enabled only if status is "pending" */}
+                                        <button 
+                                            className={styles.shippingLabelButton} 
+                                            onClick={order.status === "pending" ? () => alert("Generating Shipping Label...") : null}
+                                            disabled={order.status !== "pending"}
+                                        >
+                                            Създай товарителница
+                                        </button>
+
+                                        {/* Delete Button */}
+                                        <button 
+                                            className={styles.deleteButton} 
+                                            onClick={() => handleDeleteOrder(order.id)}
+                                        >
+                                            Изтрий поръчката
+                                        </button>
+                                    </div>
+
                                 </div>
                             )}
                         </li>
                     ))}
                 </ul>
             ) : (
-                <p>No orders available.</p>
+                <p>Няма налични поръчки.</p>
             )}
         </div>
     );

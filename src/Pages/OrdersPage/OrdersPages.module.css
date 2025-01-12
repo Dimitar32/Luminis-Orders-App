@@ -27,11 +27,9 @@ h2 {
     overflow: hidden;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
+    padding: 10px;
 }
 
-.orderItem:hover {
-    transform: translateY(-3px);
-}
 
 /* 🔹 Order Header (Clickable Section) */
 .orderHeader {
@@ -46,6 +44,7 @@ h2 {
     background-color: #f9f9f9;
     border-bottom: 1px solid #ddd;
     transition: background-color 0.3s ease, color 0.3s ease;
+    flex-wrap: wrap; /* Allow wrapping on small screens */
 }
 
 .orderHeader:hover {
@@ -67,7 +66,7 @@ h2 {
 .orderDetails {
     padding: 20px;
     background-color: #fff;
-    line-height: 1.5;
+    /* line-height: 1.5; */
 }
 
 /* 🔹 Order Info Grid */
@@ -138,6 +137,29 @@ h2 {
     color: #333;
 }
 
+/* 🔹 Status & Delete Button Container */
+.statusContainer {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Spacing between dropdown and button */
+    justify-content: space-between;
+    flex-wrap: wrap; /* Allow wrapping on mobile */
+}
+
+/* 🔹 Status Dropdown */
+.statusDropdown {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    width: 100%; /* Full width on mobile */
+    max-width: 200px; /* Limit width on larger screens */
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
 /* 🔹 Buttons */
 button {
     padding: 8px 12px;
@@ -153,25 +175,17 @@ button {
 /* 🔹 Delete Button */
 .deleteButton {
     background-color: red;
+    white-space: nowrap; /* Prevent text from wrapping */
 }
 
 .deleteButton:hover {
     background-color: darkred;
 }
 
-/* 🔹 Status Dropdown */
-.statusDropdown {
-    padding: 8px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: bold;
-}
-
 /* 🔹 Filter Section */
 .filterContainer {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 20px;
@@ -187,4 +201,93 @@ button {
 
 .statusDropdown:hover {
     background-color: #f1f1f1;
+}
+/* 🔹 Create Shipping Label Button */
+.shippingLabelButton {
+    display: inline-block;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+    background: linear-gradient(to right, #007bff, #0056b3); /* Blue Gradient */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+
+.shippingLabelButton:hover {
+    background: linear-gradient(to right, #0056b3, #003f7f); /* Darker on Hover */
+}
+
+.shippingLabelButton:active {
+    background: linear-gradient(to right, #003f7f, #002c5a); /* Even Darker */
+}
+
+/* 🔹 Disabled State */
+.shippingLabelButton:disabled {
+    background: #b0b0b0;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* 🔹 Mobile-Friendly */
+@media (max-width: 768px) {
+    .shippingLabelButton {
+        width: 100%;
+        padding: 14px;
+        font-size: 14px;
+    }
+}
+
+/* 🔹 Responsive Styles for Mobile */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    .orderHeader {
+        font-size: 1rem;
+        padding: 10px;
+        flex-direction: column; /* Stack elements */
+        text-align: center;
+    }
+
+    .statusContainer {
+        flex-direction: column; /* Stack items vertically */
+        align-items: flex-start;
+        gap: 5px;
+    }
+
+    .statusDropdown {
+        width: 100%; /* Full width */
+    }
+
+    .deleteButton {
+        width: 100%; /* Full width */
+        text-align: center;
+    }
+
+    .filterContainer {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .filterContainer label {
+        width: 100%;
+        text-align: center;
+    }
+
+    .orderDetails {
+        padding: 10px;
+    }
+
+    .shippingLabelButton {
+        width: 100%;
+        padding: 14px;
+        font-size: 14px;
+    }
 }
