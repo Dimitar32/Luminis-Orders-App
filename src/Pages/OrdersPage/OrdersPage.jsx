@@ -168,7 +168,7 @@ const OrdersPage = () => {
                                     <p><strong>Телефон:</strong> {order.phone}</p>
                                     <p><strong>Офис на Еконт:</strong> {order.address}</p>
                                     <p><strong>Град:</strong> {order.city}</p>
-                                    <p><strong>Бележка:</strong> {order.note || "No notes"}</p>
+                                    <p><strong>Бележка:</strong> {order.note || "Няма оставена бележка :)"}</p>
                                     <p><strong>Статус:</strong> {order.status}</p>
                                     <p><strong>Продукти:</strong></p>
                                     <ul>
