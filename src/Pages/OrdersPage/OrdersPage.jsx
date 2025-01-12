@@ -16,7 +16,7 @@ const OrdersPage = () => {
     const fetchOrders = useCallback(async () => {
         const token = localStorage.getItem("token");
         try {
-            const res = await axios.get("http://localhost:5000/api/orders", {
+            const res = await axios.get("https://luminisapi.onrender.com/api/orders", {
                 headers: { Authorization: `Bearer ${token}` }
             });
 
@@ -64,7 +64,7 @@ const OrdersPage = () => {
     const fetchProducts = async () => {
         const token = localStorage.getItem("token");
         try {
-            const res = await axios.get("http://localhost:5000/api/products-quantity", {
+            const res = await axios.get("https://luminisapi.onrender.com/api/products-quantity", {
                 headers: { Authorization: `Bearer ${token}` }
             });
 
@@ -91,7 +91,7 @@ const OrdersPage = () => {
         try {
             const token = localStorage.getItem("token");
 
-            const response = await axios.put(`http://localhost:5000/api/orders/${orderId}`, 
+            const response = await axios.put(`https://luminisapi.onrender.com/api/orders/${orderId}`, 
                 { status: newStatus }, 
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -124,7 +124,7 @@ const OrdersPage = () => {
         try {
             const token = localStorage.getItem("token");
 
-            const response = await axios.delete(`http://localhost:5000/api/orders/${orderId}`, {
+            const response = await axios.delete(`https://luminisapi.onrender.com/api/orders/${orderId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
 

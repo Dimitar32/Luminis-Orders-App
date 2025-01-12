@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/orders"; // Change if necessary
+const API_URL = "https://luminisapi.onrender.com/api/orders"; // Change if necessary
 
 export const getOrders = async (token) => {
     try {
