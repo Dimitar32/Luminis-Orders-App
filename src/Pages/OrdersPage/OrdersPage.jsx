@@ -237,7 +237,7 @@ const OrdersPage = () => {
 
                                         <strong>Крайна Цена:</strong> 
                                         {JSON.parse(order.order_items || "[]")
-                                            .reduce((sum, item) => sum + item.цена, 0)} лв.
+                                            .reduce((sum, item) => sum + item.price, 0)} лв.
 
                                         <div className={styles.statusContainer}>
                                             {/* Status Dropdown */}
