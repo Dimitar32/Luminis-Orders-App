@@ -230,7 +230,7 @@ const OrdersPage = () => {
                                         <ul>
                                             {JSON.parse(order.order_items || "[]").map((item, idx) => (
                                                 <li key={idx}>
-                                                    {item.продукт} - {item.количество} бр. - {item.цена} лв.
+                                                    {item.name} - {item.quantity} бр. - {item.price} лв.
                                                 </li>
                                             ))}
                                         </ul>
