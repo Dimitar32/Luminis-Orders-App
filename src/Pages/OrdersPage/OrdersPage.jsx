@@ -156,7 +156,7 @@ const OrdersPage = () => {
                                 className={`${styles.orderHeader} ${openOrder === order.id ? styles.active : ""}`} 
                                 onClick={() => toggleOrderDetails(order.id)}
                             >
-                                <span>{order.first_name} {order.last_name} - {order.phone} - {order.city}</span>
+                                <span>{order.first_name} {order.last_name} - {order.city}</span>
                                 <span className={styles.toggleIcon}>{openOrder === order.id ? "−" : "+"}</span>
                             </div>
 
@@ -170,8 +170,7 @@ const OrdersPage = () => {
                                     <p><strong>Град:</strong> {order.city}</p>
                                     <p><strong>Бележка:</strong> {order.note || "No notes"}</p>
                                     <p><strong>Статус:</strong> {order.status}</p>
-
-                                    <h4>Продукти:</h4>
+                                    <p><strong>Продукти:</strong></p>
                                     <ul>
                                         {JSON.parse(order.order_items || "[]").map((item, idx) => (
                                             <li key={idx}>

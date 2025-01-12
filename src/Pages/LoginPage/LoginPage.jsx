@@ -35,7 +35,7 @@ const LoginPage = ({ setToken }) => {
     return (
         <div className={styles.container}>
             <div className={styles.loginCard}>
-                <h2>Login to Your Account</h2>
+                <h2>Вход</h2>
 
                 {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
 
@@ -60,7 +60,7 @@ const LoginPage = ({ setToken }) => {
                         />
                     </div>
 
-                    <button type="submit">Login</button>
+                    <button type="submit">Влез</button>
                 </form>
             </div>
         </div>

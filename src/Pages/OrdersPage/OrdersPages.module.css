@@ -69,6 +69,10 @@ h2 {
     /* line-height: 1.5; */
 }
 
+.orderDetails ul{
+    margin-bottom: 20px;
+}
+
 /* 🔹 Order Info Grid */
 .orderInfo {
     display: grid;
