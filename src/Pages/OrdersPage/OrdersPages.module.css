@@ -5,6 +5,41 @@
     margin: auto;
 }
 
+/* 🔹 Tab Container */
+.tabContainer {
+    display: flex;
+    justify-content: start;
+    gap: 20px;
+    margin-bottom: 20px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* 🔹 Individual Tab */
+.tab {
+    cursor: pointer;
+    color: gray;
+    transition: all 0.3s ease;
+}
+
+/* 🔹 Active Tab */
+.activeTab {
+    color: black;
+    font-weight: bold;
+    position: relative;
+}
+
+.activeTab::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: blue;
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+}
+
 /* 🔹 Title */
 h2 {
     text-align: center;
@@ -240,12 +275,42 @@ button {
     box-shadow: none;
 }
 
+/* 🔹 Products View */
+.productsContainer {
+    padding: 20px;
+    text-align: center;
+}
+
+.productsContainer h3 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+/* 🔹 Product Table */
+.productTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.productTable th, .productTable td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+.productTable th {
+    background-color: #007bff;
+    color: white;
+}
+
+
 /* 🔹 Mobile-Friendly */
 @media (max-width: 768px) {
     .shippingLabelButton {
         width: 100%;
         padding: 14px;
-        font-size: 14px;
     }
 }
 
@@ -258,7 +323,6 @@ button {
     .orderHeader {
         font-size: 1rem;
         padding: 10px;
-        flex-direction: column; /* Stack elements */
         text-align: center;
     }
 
@@ -295,4 +359,28 @@ button {
         width: 100%;
         padding: 14px;
     }
+
+    .tabContainer {
+        font-size: 16px;
+        gap: 10px;
+    }
+
+    .productTable th, .productTable td {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+}
+
+
+@media (max-width: 368px) {
+
+    .orderHeader {
+        flex-direction: column; /* Stack elements */
+    }
+    
+    .statusContainer {
+        flex-direction: column; /* Stack items vertically */
+    }
+
 }
