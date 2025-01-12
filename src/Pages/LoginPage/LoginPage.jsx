@@ -60,7 +60,7 @@ const LoginPage = ({ setToken }) => {
                         />
                     </div>
 
-                    <button type="submit">Влез</button>
+                    <button className={styles.loginButton} type="submit">Влез</button>
                 </form>
             </div>
         </div>
