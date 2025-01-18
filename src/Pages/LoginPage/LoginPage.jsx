@@ -1,37 +1,17 @@
 import { useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom"; // For redirection
+import { useAuth } from "../../hooks/useAuth"; // Import the custom hook
 import styles from "../LoginPage/LoginPage.module.css";
 
 const LoginPage = ({ setToken }) => {
     const [password, setPassword] = useState("");
     const [username, setUsername] = useState("");
-    const [errorMessage, setErrorMessage] = useState(""); // Show error messages
-    const navigate = useNavigate(); // Hook for navigation
+    const { login, errorMessage } = useAuth(); // Use the hook
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        setErrorMessage(""); // Clear previous errors
-
-        try {
-            const res = await axios.post("https://luminisapi.onrender.com/api/login", {
-                username,
-                password
-            });
-
-            if (res.data.success) {
-                localStorage.setItem("token", res.data.token); // Store token
-                setToken(res.data.token);
-                navigate("/orders"); // Redirect to OrdersPage
-            } else {
-                setErrorMessage("Invalid username or password.");
-            }
-        } catch (error) {
-            console.error("Login error:", error);
-            setErrorMessage("Login failed. Please try again.");
-        }
+        await login(username, password, setToken); // Call the login function from the hook
     };
-
+    
     return (
         <div className={styles.container}>
             <div className={styles.loginCard}>

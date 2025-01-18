@@ -1,164 +1,40 @@
-import { useCallback, useEffect, useState } from "react";
-import axios from "axios";
+import { useEffect, useState  } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "../OrdersPage/OrdersPages.module.css"; // Ensure correct file path
+import { useOrders } from "../../hooks/useOrders"; // Import the custom hook
+import { useProducts } from "../../hooks/useProducts"; // Import the custom hook for products
+import styles from "../OrdersPage/OrdersPages.module.css";
 
 const OrdersPage = () => {
-    const [orders, setOrders] = useState([]);
-    const [filteredOrders, setFilteredOrders] = useState([]); // Stores filtered orders
-    const [openOrder, setOpenOrder] = useState(null); // Track which order is open
-    const [filterStatus, setFilterStatus] = useState("all"); // Track selected filter
-    const [activeTab, setActiveTab] = useState("orders"); // "orders" or "products"
-    const [products, setProducts] = useState([]);
+    const [activeTab, setActiveTab] = useState("orders"); // Track active tab
     const navigate = useNavigate();
 
+    // Use custom hooks for orders and products
+    const {
+        // orders,
+        filteredOrders,
+        fetchOrdersData,
+        filterStatus,
+        setFilterStatus,
+        openOrder,
+        toggleOrderDetails,
+        updateStatus,
+        deleteOrderById,
+    } = useOrders(navigate);
 
-    const fetchOrders = useCallback(async () => {
-        const token = localStorage.getItem("token");
-        try {
-            const res = await axios.get("https://luminisapi.onrender.com/api/orders", {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+    const { products, fetchProductsData } = useProducts();
 
-            if (res.data.success) {
-                const ordersData = res.data.orders.map(order => ({
-                    ...order,
-                    status: order.status.toLowerCase() // Normalize case
-                }));
-
-                setOrders(ordersData);
-                setFilteredOrders(ordersData); // Initially show all orders
-            } else {
-                console.error("Failed to fetch orders");
-            }
-        } catch (err) {
-            console.error("Error fetching orders:", err);
-            if (err.response && err.response.status === 401) {
-                alert("Session expired. Please log in again.");
-                localStorage.removeItem("token");
-                navigate("/login");
-            }
-        }
-    }, [navigate]);
-
+    // Fetch orders on component mount
     useEffect(() => {
-        const token = localStorage.getItem("token");
-
-        if (!token) {
-            navigate("/login");
-            return;
+        if (activeTab === "orders") {
+            fetchOrdersData();
         }
+    }, [fetchOrdersData, activeTab]);
 
-        fetchOrders();
-    }, [navigate, fetchOrders]);
-
-    // ✅ Apply filtering when filterStatus changes
-    useEffect(() => {
-        if (filterStatus === "all") {
-            setFilteredOrders(orders);
-        } else {
-            setFilteredOrders(orders.filter(order => order.status === filterStatus));
-        }
-    }, [filterStatus, orders]); // ✅ Depend on both filterStatus and orders
-
-    const fetchProducts = async () => {
-        const token = localStorage.getItem("token");
-        try {
-            const res = await axios.get("https://luminisapi.onrender.com/api/products-quantity", {
-                headers: { Authorization: `Bearer ${token}` }
-            });
-
-            if (res.data.success) {
-                setProducts(res.data.products);
-            } else {
-                console.error("Failed to fetch products");
-            }
-        } catch (err) {
-            console.error("Error fetching products:", err);
-            alert("Failed to load product quantities.");
-        }
-    };
-
+    // Handle tab change
     const changeTab = (tab) => {
         setActiveTab(tab);
-        if (tab === "products") fetchProducts();
-    };
-
-    /**
-     * ✅ Function to Update Order Status
-     */
-    const handleUpdateStatus = async (orderId, newStatus) => {
-        try {
-            const token = localStorage.getItem("token");
-
-            const response = await axios.put(`https://luminisapi.onrender.com/api/orders/${orderId}`, 
-                { status: newStatus }, 
-                { headers: { Authorization: `Bearer ${token}` } }
-            );
-
-            if (response.data.success) {
-                alert("Order status updated successfully!");
-
-                // Update orders state
-                const updatedOrders = orders.map(order =>
-                    order.id === orderId ? { ...order, status: newStatus.toLowerCase() } : order
-                );
-
-                setOrders(updatedOrders);
-                filterOrders(filterStatus, updatedOrders); // Refresh filtered orders
-            } else {
-                alert("Failed to update order status.");
-            }
-        } catch (error) {
-            console.error("Error updating order status:", error);
-            alert("Error updating order status. Please try again.");
-        }
-    };
-
-    /**
-     * ✅ Function to Delete Order
-     */
-    const handleDeleteOrder = async (orderId) => {
-        if (!window.confirm("Are you sure you want to delete this order?")) return;
-
-        try {
-            const token = localStorage.getItem("token");
-
-            const response = await axios.delete(`https://luminisapi.onrender.com/api/orders/${orderId}`, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
-
-            if (response.data.success) {
-                alert("Order deleted successfully!");
-
-                const updatedOrders = orders.filter(order => order.id !== orderId);
-                setOrders(updatedOrders);
-                filterOrders(filterStatus, updatedOrders); // Refresh filtered orders
-            } else {
-                alert("Failed to delete order.");
-            }
-        } catch (error) {
-            console.error("Error deleting order:", error);
-            alert("Error deleting order. Please try again.");
-        }
-    };
-
-    /**
-     * ✅ Toggle Order Details
-     */
-    const toggleOrderDetails = (orderId) => {
-        setOpenOrder(openOrder === orderId ? null : orderId);
-    };
-
-    /**
-     * ✅ Filter Orders by Status (Case-Insensitive Matching)
-     */
-    const filterOrders = (status, ordersData = orders) => {
-        setFilterStatus(status);
-        if (status === "all") {
-            setFilteredOrders(ordersData);
-        } else {
-            setFilteredOrders(ordersData.filter(order => order.status === status.toLowerCase()));
+        if (tab === "products") {
+            fetchProductsData();
         }
     };
 
@@ -243,7 +119,7 @@ const OrdersPage = () => {
                                             {/* Status Dropdown */}
                                             <select 
                                                 value={order.status || "pending"} 
-                                                onChange={(e) => handleUpdateStatus(order.id, e.target.value)}
+                                                onChange={(e) => updateStatus(order.id, e.target.value)}
                                                 className={styles.statusDropdown}
                                             >
                                                 <option value="pending">Pending</option>
@@ -264,7 +140,7 @@ const OrdersPage = () => {
                                             {/* Delete Button */}
                                             <button 
                                                 className={styles.deleteButton} 
-                                                onClick={() => handleDeleteOrder(order.id)}
+                                                onClick={() => deleteOrderById(order.id)}
                                             >
                                                 Изтрий поръчката
                                             </button>
