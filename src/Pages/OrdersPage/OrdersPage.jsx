@@ -2,6 +2,7 @@ import { useEffect, useState  } from "react";
 import { useNavigate } from "react-router-dom";
 import { useOrders } from "../../hooks/useOrders"; // Import the custom hook
 import { useProducts } from "../../hooks/useProducts"; // Import the custom hook for products
+import InvenoryTable from "./InventoryTable";
 import styles from "../OrdersPage/OrdersPages.module.css";
 
 const OrdersPage = () => {
@@ -54,6 +55,12 @@ const OrdersPage = () => {
                     onClick={() => changeTab("products")}
                 >
                     Наличности
+                </span>
+                <span 
+                    className={`${styles.tab} ${activeTab === "inventory-manager" ? styles.activeTab : ""}`} 
+                    onClick={() => changeTab("inventory-manager")}
+                >
+                    Инвентарен мениджър
                 </span>
             </div>
 
@@ -158,8 +165,10 @@ const OrdersPage = () => {
                 </>)}
 
 
+            {/* Show Products */}
+            {activeTab === "products" && <InvenoryTable products={products} />}
             {/* 🔹 Show Product Quantities */}
-            {activeTab === "products" && (
+            {/* {activeTab === "products" && (
                 <div className={styles.productsContainer}>
                     {products.length > 0 ? (
                         <table className={styles.productTable}>
@@ -186,7 +195,7 @@ const OrdersPage = () => {
                         <p>Няма налични продукти.</p>
                     )}
                 </div>
-            )}
+            )} */}
         </div>
     );
 };
