@@ -66,6 +66,21 @@ export const fetchOrders = async () => {
   };
   
   /**
+   * Update product details
+   * @param {string} productId - ID of the product to update
+   * @param {object} updatedProduct - Updated product details (e.g., { brand, productname, quantity, price, description })
+   */
+  export const updateProductAPI = async (productId, updatedProduct) => {
+    try {
+        const response = await apiClient.put(`/products/${productId}`, updatedProduct);
+        return response.data;
+    } catch (error) {
+        console.error("Error updating product:", error);
+        throw error;
+    }
+  };
+  
+  /**
    * Update the status of an order
    * @param {string} orderId - ID of the order to update
    * @param {string} newStatus - New status for the order
@@ -95,4 +110,3 @@ export const fetchOrders = async () => {
       throw error;
     }
   };
-  

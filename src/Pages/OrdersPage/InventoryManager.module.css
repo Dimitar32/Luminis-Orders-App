@@ -1,0 +1,124 @@
+/* InventoryManager.module.css */
+
+/* General Container */
+.container {
+    padding: 20px;
+    max-width: 900px;
+    margin: auto;
+}
+
+/* Title */
+h2 {
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+
+/* 🔹 Product Table */
+.productTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.productTable th, .productTable td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+.productTable th {
+    background-color: #007bff;
+    color: white;
+}
+
+
+/* Input Fields */
+.inputField {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Buttons */
+button {
+    padding: 8px 12px;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.editButton {
+    background-color: #007bff;
+    color: white;
+}
+
+.editButton:hover {
+    background-color: #0056b3;
+}
+
+.saveButton {
+    background-color: #28a745;
+    color: white;
+}
+
+.saveButton:hover {
+    background-color: #218838;
+}
+
+.cancelButton {
+    background-color: #dc3545;
+    color: white;
+    margin-top: 8px;
+}
+
+.cancelButton:hover {
+    background-color: #c82333;
+}
+
+/* Empty State */
+p {
+    text-align: center;
+    font-size: 16px;
+    color: #777;
+    margin-top: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    .productTable th, .productTable td {
+        padding: 8px;
+        font-size: 12px;
+    }
+
+    button {
+        font-size: 12px;
+        padding: 6px 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    h2 {
+        font-size: 20px;
+    }
+
+    .productTable th, .productTable td {
+        font-size: 10px;
+    }
+
+    button {
+        font-size: 10px;
+        padding: 4px 8px;
+    }
+}

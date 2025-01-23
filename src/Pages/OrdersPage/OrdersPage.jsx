@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useOrders } from "../../hooks/useOrders"; // Import the custom hook
 import { useProducts } from "../../hooks/useProducts"; // Import the custom hook for products
 import InvenoryTable from "./InventoryTable";
+import InventoryManager from "./InventoryManager";
 import styles from "../OrdersPage/OrdersPages.module.css";
 
 const OrdersPage = () => {
@@ -34,7 +35,7 @@ const OrdersPage = () => {
     // Handle tab change
     const changeTab = (tab) => {
         setActiveTab(tab);
-        if (tab === "products") {
+        if (tab === "products" || tab === "inventory-manager") {
             fetchProductsData();
         }
     };
@@ -164,38 +165,9 @@ const OrdersPage = () => {
                 )}
                 </>)}
 
-
-            {/* Show Products */}
             {activeTab === "products" && <InvenoryTable products={products} />}
-            {/* 🔹 Show Product Quantities */}
-            {/* {activeTab === "products" && (
-                <div className={styles.productsContainer}>
-                    {products.length > 0 ? (
-                        <table className={styles.productTable}>
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Марка</th>
-                                    <th>Продукт</th>
-                                    <th>Количество</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {products.map(product => (
-                                    <tr key={product.id}>
-                                        <td>{product.id}</td>
-                                        <td>{product.brand}</td>
-                                        <td>{product.productname}</td>
-                                        <td>{product.quantity}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    ) : (
-                        <p>Няма налични продукти.</p>
-                    )}
-                </div>
-            )} */}
+            
+            {activeTab === "inventory-manager" && <InventoryManager products={products} />}
         </div>
     );
 };

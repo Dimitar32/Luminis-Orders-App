@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { fetchProducts } from "../api/api";
+import { fetchProducts, updateProductAPI } from "../api/api";
 
 export const useProducts = () => {
   const [products, setProducts] = useState([]);
@@ -19,8 +19,20 @@ export const useProducts = () => {
     }
   };
 
-  return {
-    products,
-    fetchProductsData,
+
+  const updateProduct = async (id, updatedProduct) => {
+    try {
+        await updateProductAPI(id, updatedProduct);
+        setProducts((prev) =>
+            prev.map((product) =>
+                product.id === id ? { ...product, ...updatedProduct } : product
+            )
+        );
+    } catch (error) {
+        console.error("Error updating product:", error);
+    }
   };
+
+
+  return { products, fetchProductsData, updateProduct };
 };

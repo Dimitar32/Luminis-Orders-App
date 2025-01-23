@@ -4,6 +4,7 @@ import styles from "../OrdersPage/OrdersPages.module.css"; // Adjust the path as
 const InvenoryTable = ({ products }) => {
     return (
         <div className={styles.productsContainer}>
+            <h2>Наличности</h2>
             {products.length > 0 ? (
                 <table className={styles.productTable}>
                     <thead>
