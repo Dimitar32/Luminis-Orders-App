@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { useProducts } from "../../hooks/useProducts";
-import styles from "./InventoryManager.module.css";
+import styles from "./OrdersPages.module.css";
 
 const InventoryManager = ({ products }) => {
     const { updateProduct } = useProducts(); // Using the custom hook
     const [editingProduct, setEditingProduct] = useState(null);
     const [editedProduct, setEditedProduct] = useState({});
+    const [filterBrand, setFilterBrand] = useState("all");
 
     const startEditing = (product) => {
         setEditingProduct(product.id);
@@ -27,29 +28,64 @@ const InventoryManager = ({ products }) => {
         setEditedProduct({});
     };
 
+    // Get unique brands for the dropdown
+    const uniqueBrands = [...new Set(products.map((product) => product.brand))];
+
+    // Filter products based on selected brand
+    const filteredProducts =
+        filterBrand === "all"
+            ? products
+            : products.filter((product) => product.brand === filterBrand);
+
     return (
         <div className={styles.container}>
-            <h2>Мениджър на инвентара</h2>
-            {products.length > 0 ? (
-                <table className={styles.productTable}>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Марка</th>
-                            <th>Продукт</th>
-                            <th>Брой</th>
-                            <th>Цена</th>
-                            {/* <th>Описание</th> */}
-                            <th>Действия</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {products.map((product) => (
-                            <tr key={product.id}>
-                                {editingProduct === product.id ? (
-                                    <>
-                                        <td>{product.id}</td>
-                                        <td>
+            <h2>Управление на наличностите</h2>
+
+
+            {/* Brand Filter Dropdown */}
+            <div className={styles.filterContainer}>
+                <label htmlFor="brandFilter">Филтрирай по марка:</label>
+                <select
+                    id="brandFilter"
+                    value={filterBrand}
+                    onChange={(e) => setFilterBrand(e.target.value)}
+                    className={styles.statusDropdown}
+                >
+                    <option value="all">Всички марки</option>
+                    {uniqueBrands.map((brand, index) => (
+                        <option key={index} value={brand}>
+                            {brand}
+                        </option>
+                    ))}
+                </select>
+            </div>
+
+            {filteredProducts.length > 0 ? (
+                <ul className={styles.orderList}>
+                    {filteredProducts.map((product) => (
+                        <li key={product.id} className={styles.orderItem}>
+                            <div
+                                className={`${styles.orderHeader} ${
+                                    editingProduct === product.id ? styles.active : ""
+                                }`}
+                                onClick={() =>
+                                    editingProduct !== product.id
+                                        ? startEditing(product)
+                                        : cancelEditing()
+                                }
+                            >
+                                <span>{product.brand} - {product.productname}</span>
+                                <span className={styles.toggleIcon}>
+                                    {editingProduct === product.id ? "−" : "+"}
+                                </span>
+                            </div>
+
+                            {editingProduct === product.id && (
+                                <div className={styles.orderDetails}>
+                                    <h3>Редактиране на продукт</h3>
+                                    <div className={styles.orderInfo}>
+                                        <label>
+                                            Марка:
                                             <input
                                                 type="text"
                                                 name="brand"
@@ -57,8 +93,9 @@ const InventoryManager = ({ products }) => {
                                                 onChange={handleChange}
                                                 className={styles.inputField}
                                             />
-                                        </td>
-                                        <td>
+                                        </label>
+                                        <label>
+                                            Продукт:
                                             <input
                                                 type="text"
                                                 name="productname"
@@ -66,8 +103,9 @@ const InventoryManager = ({ products }) => {
                                                 onChange={handleChange}
                                                 className={styles.inputField}
                                             />
-                                        </td>
-                                        <td>
+                                        </label>
+                                        <label>
+                                            Брой:
                                             <input
                                                 type="number"
                                                 name="quantity"
@@ -75,53 +113,37 @@ const InventoryManager = ({ products }) => {
                                                 onChange={handleChange}
                                                 className={styles.inputField}
                                             />
-                                        </td>
-                                        <td>
+                                        </label>
+                                        <label>
+                                            Цена:
                                             <input
                                                 type="number"
                                                 name="price"
-                                                value={editedProduct.price || ''}
+                                                value={editedProduct.price || ""}
                                                 onChange={handleChange}
                                                 className={styles.inputField}
                                             />
-                                        </td>
-                                        {/* <td>
-                                            <input
-                                                type="text"
-                                                name="description"
-                                                value={editedProduct.description}
-                                                onChange={handleChange}
-                                                className={styles.inputField}
-                                            />
-                                        </td> */}
-                                        <td>
-                                            <button className={styles.saveButton} onClick={saveChanges}>
-                                                Запази
-                                            </button>
-                                            <button className={styles.cancelButton} onClick={cancelEditing}>
-                                                Отказ
-                                            </button>
-                                        </td>
-                                    </>
-                                ) : (
-                                    <>
-                                        <td>{product.id}</td>
-                                        <td>{product.brand}</td>
-                                        <td>{product.productname}</td>
-                                        <td>{product.quantity}</td>
-                                        <td>{product.discount_price} лв.</td>
-                                        {/* <td>{product.description}</td> */}
-                                        <td>
-                                            <button className={styles.editButton} onClick={() => startEditing(product)}>
-                                                Редактирай
-                                            </button>
-                                        </td>
-                                    </>
-                                )}
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+                                        </label>
+                                    </div>
+                                    <div className={styles.statusContainer}>
+                                        <button
+                                            className={styles.shippingLabelButton}
+                                            onClick={saveChanges}
+                                        >
+                                            Запази
+                                        </button>
+                                        <button
+                                            className={styles.deleteButton}
+                                            onClick={cancelEditing}
+                                        >
+                                            Отказ
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
+                        </li>
+                    ))}
+                </ul>
             ) : (
                 <p>Няма налични продукти.</p>
             )}

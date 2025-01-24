@@ -4,6 +4,7 @@ import { useOrders } from "../../hooks/useOrders"; // Import the custom hook
 import { useProducts } from "../../hooks/useProducts"; // Import the custom hook for products
 import InvenoryTable from "./InventoryTable";
 import InventoryManager from "./InventoryManager";
+import Orders from "./Orders"; // Import the new Orders component
 import styles from "../OrdersPage/OrdersPages.module.css";
 
 const OrdersPage = () => {
@@ -65,8 +66,8 @@ const OrdersPage = () => {
                 </span>
             </div>
 
-            {/* 🔹 Filter Orders */}
-            {activeTab === "orders" && (
+
+            {/* {activeTab === "orders" && (
                 <div className={styles.filterContainer}>
                     <label htmlFor="statusFilter">Филтрирай по статус:</label>
                     <select 
@@ -84,14 +85,13 @@ const OrdersPage = () => {
                 </div>
             )}
 
-            {/* 🔹 Show Orders */}
+
             {activeTab === "orders" && (
                 <>
                 {filteredOrders.length > 0 ? (
                     <ul className={styles.orderList}>
                         {filteredOrders.map(order => (
                             <li key={order.id} className={styles.orderItem}>
-                                {/* 🔹 Click to Expand Order Details */}
                                 <div 
                                     className={`${styles.orderHeader} ${openOrder === order.id ? styles.active : ""}`} 
                                     onClick={() => toggleOrderDetails(order.id)}
@@ -100,7 +100,6 @@ const OrdersPage = () => {
                                     <span className={styles.toggleIcon}>{openOrder === order.id ? "−" : "+"}</span>
                                 </div>
 
-                                {/* 🔹 Order Details (Expand when clicked) */}
                                 {openOrder === order.id && (
                                     <div className={styles.orderDetails}>
                                         <h3>Детайли на поръчката</h3>
@@ -124,7 +123,6 @@ const OrdersPage = () => {
                                             .reduce((sum, item) => sum + item.price, 0)} лв.
 
                                         <div className={styles.statusContainer}>
-                                            {/* Status Dropdown */}
                                             <select 
                                                 value={order.status || "pending"} 
                                                 onChange={(e) => updateStatus(order.id, e.target.value)}
@@ -136,7 +134,6 @@ const OrdersPage = () => {
                                                 <option value="cancelled">Cancelled</option>
                                             </select>
 
-                                            {/* Create Shipping Label Button - Enabled only if status is "pending" */}
                                             <button 
                                                 className={styles.shippingLabelButton} 
                                                 onClick={order.status === "pending" ? () => alert("Generating Shipping Label...") : null}
@@ -145,7 +142,6 @@ const OrdersPage = () => {
                                                 Създай товарителница
                                             </button>
 
-                                            {/* Delete Button */}
                                             <button 
                                                 className={styles.deleteButton} 
                                                 onClick={() => deleteOrderById(order.id)}
@@ -163,7 +159,19 @@ const OrdersPage = () => {
                     <p>Няма налични поръчки.</p>
                     
                 )}
-                </>)}
+                </>)} */}
+
+            {activeTab === "orders" && (
+                <Orders
+                    filteredOrders={filteredOrders}
+                    filterStatus={filterStatus}
+                    setFilterStatus={setFilterStatus}
+                    openOrder={openOrder}
+                    toggleOrderDetails={toggleOrderDetails}
+                    updateStatus={updateStatus}
+                    deleteOrderById={deleteOrderById}
+                />
+            )}
 
             {activeTab === "products" && <InvenoryTable products={products} />}
             
