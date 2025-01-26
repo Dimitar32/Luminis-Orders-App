@@ -20,7 +20,6 @@ export const useOrders = (navigate) => {
                 setFilteredOrders(ordersData); // Show all orders initially
             }
         } catch (error) {
-            console.error("Error fetching orders:", error);
             if (error.response?.status === 401) {
                 alert("Session expired. Please log in again.");
                 localStorage.removeItem("token");
@@ -52,7 +51,7 @@ export const useOrders = (navigate) => {
                 filterOrders(filterStatus, updatedOrders); // Update filtered orders
             }
         } catch (error) {
-            console.error("Error updating order status:", error);
+            throw error; 
         }
     };
 
@@ -68,7 +67,7 @@ export const useOrders = (navigate) => {
                 filterOrders(filterStatus, updatedOrders); // Update filtered orders
             }
         } catch (error) {
-            console.error("Error deleting order:", error);
+            throw error; 
         }
     };
 

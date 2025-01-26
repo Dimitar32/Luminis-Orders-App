@@ -24,7 +24,6 @@ const VerifyPage = ({ username, setToken }) => {
                 alert("Invalid verification code");
             }
         } catch (error) {
-            console.error("Verification error:", error);
             alert("Verification failed");
         }
     };

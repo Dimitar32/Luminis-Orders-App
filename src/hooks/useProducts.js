@@ -11,10 +11,9 @@ export const useProducts = () => {
       if (data.success) {
         setProducts(data.products);
       } else {
-        console.error("Failed to fetch products");
+        alert("Failed to fetch products");
       }
     } catch (error) {
-      console.error("Error fetching products:", error);
       alert("Failed to load product quantities.");
     }
   };
@@ -29,7 +28,7 @@ export const useProducts = () => {
             )
         );
     } catch (error) {
-        console.error("Error updating product:", error);
+      alert("Error updating product:", error);
     }
   };
 

@@ -34,7 +34,6 @@ export const loginUser = async (username, password) => {
         });
         return response.data;
     } catch (error) {
-        console.error("Login error:", error);
         throw error;
     }
 };
@@ -47,7 +46,6 @@ export const fetchOrders = async () => {
       const response = await apiClient.get("/orders");
       return response.data;
     } catch (error) {
-      console.error("Error fetching orders:", error);
       throw error;
     }
   };
@@ -60,11 +58,36 @@ export const fetchOrders = async () => {
       const response = await apiClient.get("/products-quantity");
       return response.data;
     } catch (error) {
-      console.error("Error fetching products:", error);
       throw error;
     }
   };
   
+
+/**
+ * Fetch the product name by its ID
+ * @param {number} productId - The ID of the product to fetch
+ * @returns {Promise<string>} - The product name
+ */
+export const fetchProductNameById = async (productId) => {
+  try {
+      const response = await fetch(`${API_BASE_URL}/products/${productId}`);
+      
+      if (!response.ok) {
+          throw new Error('Failed to fetch product name');
+      }
+
+      const result = await response.json();
+
+      if (!result.success) {
+          throw new Error(result.message || 'Product not found');
+      }
+
+      return result.product.productname; // Return the product name
+  } catch (error) {
+      throw error;
+  }
+};
+
   /**
    * Update product details
    * @param {string} productId - ID of the product to update
@@ -75,7 +98,6 @@ export const fetchOrders = async () => {
         const response = await apiClient.put(`/products/${productId}`, updatedProduct);
         return response.data;
     } catch (error) {
-        console.error("Error updating product:", error);
         throw error;
     }
   };
@@ -92,7 +114,6 @@ export const fetchOrders = async () => {
       });
       return response.data;
     } catch (error) {
-      console.error("Error updating order status:", error);
       throw error;
     }
   };
@@ -106,7 +127,6 @@ export const fetchOrders = async () => {
       const response = await apiClient.delete(`/orders/${orderId}`);
       return response.data;
     } catch (error) {
-      console.error("Error deleting order:", error);
       throw error;
     }
   };

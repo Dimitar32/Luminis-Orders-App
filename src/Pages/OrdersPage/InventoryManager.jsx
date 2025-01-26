@@ -41,7 +41,6 @@ const InventoryManager = ({ products }) => {
         <div className={styles.container}>
             <h2>Управление на наличностите</h2>
 
-
             {/* Brand Filter Dropdown */}
             <div className={styles.filterContainer}>
                 <label htmlFor="brandFilter">Филтрирай по марка:</label>
