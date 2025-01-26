@@ -118,7 +118,7 @@ const InventoryManager = ({ products }) => {
                                             <input
                                                 type="number"
                                                 name="price"
-                                                value={editedProduct.price || ""}
+                                                value={editedProduct.discount_price || ""}
                                                 onChange={handleChange}
                                                 className={styles.inputField}
                                             />
