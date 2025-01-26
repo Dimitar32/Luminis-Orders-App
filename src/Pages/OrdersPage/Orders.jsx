@@ -77,6 +77,13 @@ const Orders = ({
                                         {JSON.parse(order.order_items || "[]").map((item, idx) => (
                                             <li key={idx}>
                                                 {item.name} - {item.quantity} бр. - {item.price} лв.
+
+                                                {/* Check if `option` is not null or an empty string */}
+                                                {item.option && item.option.trim() !== "" && (
+                                                    <div>
+                                                        Избран продукт от комплекта: {item.option}
+                                                    </div>
+                                                )}
                                             </li>
                                         ))}
                                     </ul>
