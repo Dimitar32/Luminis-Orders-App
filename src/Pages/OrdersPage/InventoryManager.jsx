@@ -19,7 +19,15 @@ const InventoryManager = ({ products }) => {
     };
 
     const saveChanges = async () => {
-        await updateProduct(editedProduct.id, editedProduct); // Update product via API
+        try{    
+            await updateProduct(editedProduct.id, editedProduct); // Update product via API
+
+            window.location.reload(); // Reload the page (optional)
+            // alert("Product updated successfully!");
+        } catch (error) {
+            throw error; 
+        }
+        
         setEditingProduct(null);
     };
 
@@ -117,8 +125,8 @@ const InventoryManager = ({ products }) => {
                                             Цена:
                                             <input
                                                 type="number"
-                                                name="price"
-                                                value={editedProduct.discount_price || ""}
+                                                name="discount_price"
+                                                value={editedProduct.discount_price}
                                                 onChange={handleChange}
                                                 className={styles.inputField}
                                             />
