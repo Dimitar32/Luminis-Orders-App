@@ -5,6 +5,30 @@
     margin: auto;
 }
 
+:root {
+    --bg-color: #ffffff;
+    --text-color: #333;
+    --tab-color:gray;
+    --active-tab-color:black;
+    --primary-color: #3498db;
+    --secondary-color: #f1f1f1;
+}
+
+[data-theme="dark"] {
+    --bg-color: #121212;
+    --text-color: #ffffff;
+    --tab-color:#f8f9fa;
+    --active-tab-color:#eaeaea;
+    --primary-color: #1e90ff;
+    --secondary-color: #1e1e1e;
+}
+
+.container {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background 0.3s ease-in-out;
+}
+
 /* 🔹 Tab Container */
 .tabContainer {
     display: flex;
@@ -18,13 +42,13 @@
 /* 🔹 Individual Tab */
 .tab {
     cursor: pointer;
-    color: gray;
+    color: var(--tab-color);
     transition: all 0.3s ease;
 }
 
 /* 🔹 Active Tab */
 .activeTab {
-    color: black;
+    color: var(--active-tab-color);;
     font-weight: bold;
     position: relative;
 }
@@ -44,7 +68,7 @@
 h2 {
     text-align: center;
     font-size: 24px;
-    color: #333;
+    color:  var(--text-color);
 }
 
 /* 🔹 Order List */
@@ -305,6 +329,24 @@ button {
     color: white;
 }
 
+
+.themeToggle {
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    background: none;
+    color: var(--primary-color);
+    transition: color 0.3s ease-in-out;
+    margin-bottom: 20px;
+}
+
+.themeToggle:hover {
+    color: var(--primary-color);
+}
+
+.icon {
+    font-size: 24px;
+}
 
 /* 🔹 Mobile-Friendly */
 @media (max-width: 768px) {
