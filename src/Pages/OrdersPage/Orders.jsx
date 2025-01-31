@@ -24,6 +24,7 @@ const Orders = ({
                 >
                     <option value="all">Всички</option>
                     <option value="pending">В процес</option>
+                    <option value="confirmed">Потвърдена</option>
                     <option value="shipped">Изпратена</option>
                     <option value="delivered">Доставена</option>
                     <option value="cancelled">Отменена</option>
@@ -101,6 +102,7 @@ const Orders = ({
                                             className={styles.statusDropdown}
                                         >
                                             <option value="pending">Pending</option>
+                                            <option value="confirmed">Confirmed</option>
                                             <option value="shipped">Shipped</option>
                                             <option value="delivered">Delivered</option>
                                             <option value="cancelled">Cancelled</option>
