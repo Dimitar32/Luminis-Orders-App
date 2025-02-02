@@ -43,7 +43,7 @@ const OrdersPage = () => {
 
     return (
         <div className={styles.container}>
-            <h2>Управление на поръчките и инвентара</h2>
+            {/* <h2>Управление на поръчките и инвентара</h2> */}
             {/* 🔹 Tab Navigation */}
             <div className={styles.tabContainer}>
                 <span 
