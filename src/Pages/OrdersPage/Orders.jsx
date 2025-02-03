@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import styles from "../OrdersPage/OrdersPages.module.css";
 
 const Orders = ({
@@ -10,6 +10,15 @@ const Orders = ({
     updateStatus,
     deleteOrderById,
 }) => {
+    const [nameFilter, setNameFilter] = useState(""); // Stores user input for filtering
+
+    // Dynamically filters orders based on name input (if 3+ characters)
+    const displayedOrders = filteredOrders.filter((order) =>
+        nameFilter.length >= 3
+            ? `${order.first_name} ${order.last_name}`.toLowerCase().includes(nameFilter.toLowerCase())
+            : filteredOrders
+    );
+
     return (
         <div>
             <h2>Управление на поръчките</h2>
@@ -30,11 +39,27 @@ const Orders = ({
                     <option value="delivered">Доставена</option>
                     <option value="cancelled">Отменена</option>
                 </select>
+
+                <label htmlFor="nameFilter">Филтрирай по име:</label>
+                <input
+                    type="text"
+                    id="nameFilter"
+                    value={nameFilter}
+                    onChange={(e) => setNameFilter(e.target.value)}
+                    placeholder="Въведете име..."
+                    className={styles.nameFilterInput}
+                />
+                {nameFilter.length > 0 && nameFilter.length < 3 && (
+                    <p className={styles.hint} style={{ color: "red" }}>
+                        Въведете поне 3 букви за филтриране.
+                    </p>
+                )}
+
             </div>
 
-            {filteredOrders.length > 0 ? (
+            {displayedOrders.length > 0 ? (
                 <ul className={styles.orderList}>
-                    {filteredOrders.map((order) => (
+                    {displayedOrders.map((order) => (
                         <li key={order.id} className={styles.orderItem}>
                             <div
                                 className={`${styles.orderHeader} ${
