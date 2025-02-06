@@ -14,17 +14,20 @@ const Orders = ({
     const [phoneFilter, setPhoneFilter] = useState("");
 
     // Dynamically filters orders based on name input (if 3+ characters)
-    const displayedOrders = filteredOrders.filter((order) =>{
+    const displayedOrders = filteredOrders.filter((order) => {
+        const normalizedPhone = order.phone.replace(/\s+/g, ""); // Remove spaces from stored phone number
+        const normalizedFilter = phoneFilter.replace(/\s+/g, ""); // Remove spaces from input
+    
         const matchesName =
             nameFilter.length >= 3
                 ? `${order.first_name} ${order.last_name}`.toLowerCase().includes(nameFilter.toLowerCase())
                 : true;
-
+    
         const matchesPhone =
             phoneFilter.length >= 3
-                ? order.phone.includes(phoneFilter)
+                ? normalizedPhone.includes(normalizedFilter)
                 : true;
-
+    
         return matchesName && matchesPhone;
     });
 
