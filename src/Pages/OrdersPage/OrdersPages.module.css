@@ -204,6 +204,7 @@ h2 {
 .statusContainer {
     display: flex;
     align-items: center;
+    flex-direction: column; 
     gap: 10px; /* Spacing between dropdown and button */
     justify-content: space-between;
     flex-wrap: wrap; /* Allow wrapping on mobile */
@@ -257,16 +258,21 @@ button {
     padding: 10px;
     background: #f7f7f7;
     border-radius: 8px;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .filterContainer label {
     font-weight: bold;
     color: #333;
+    width: 100%;
+    text-align: center;
 }
 
 .statusDropdown:hover {
     background-color: #f1f1f1;
 }
+
 /* 🔹 Create Shipping Label Button */
 .shippingLabelButton {
     display: inline-block;

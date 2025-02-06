@@ -11,13 +11,22 @@ const Orders = ({
     deleteOrderById,
 }) => {
     const [nameFilter, setNameFilter] = useState(""); // Stores user input for filtering
+    const [phoneFilter, setPhoneFilter] = useState("");
 
     // Dynamically filters orders based on name input (if 3+ characters)
-    const displayedOrders = filteredOrders.filter((order) =>
-        nameFilter.length >= 3
-            ? `${order.first_name} ${order.last_name}`.toLowerCase().includes(nameFilter.toLowerCase())
-            : filteredOrders
-    );
+    const displayedOrders = filteredOrders.filter((order) =>{
+        const matchesName =
+            nameFilter.length >= 3
+                ? `${order.first_name} ${order.last_name}`.toLowerCase().includes(nameFilter.toLowerCase())
+                : true;
+
+        const matchesPhone =
+            phoneFilter.length >= 3
+                ? order.phone.includes(phoneFilter)
+                : true;
+
+        return matchesName && matchesPhone;
+    });
 
     return (
         <div>
@@ -52,6 +61,21 @@ const Orders = ({
                 {nameFilter.length > 0 && nameFilter.length < 3 && (
                     <p className={styles.hint} style={{ color: "red" }}>
                         Въведете поне 3 букви за филтриране.
+                    </p>
+                )}
+
+                <label htmlFor="phoneFilter">Филтрирай по телефон:</label>
+                <input
+                    type="text"
+                    id="phoneFilter"
+                    value={phoneFilter}
+                    onChange={(e) => setPhoneFilter(e.target.value)}
+                    placeholder="Въведете телефонен номер..."
+                    className={styles.phoneFilterInput}
+                />
+                {phoneFilter.length > 0 && phoneFilter.length < 3 && (
+                    <p className={styles.hint} style={{ color: "red" }}>
+                        Въведете поне 3 цифри за филтриране.
                     </p>
                 )}
 
